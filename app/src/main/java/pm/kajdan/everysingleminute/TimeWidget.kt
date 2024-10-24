@@ -29,30 +29,25 @@ class TimeWidget : AppWidgetProvider() {
             timeEntries = readCsv(context, R.raw.time)
         }
 
-        // Update each widget
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
 
-        // Set up the AlarmManager to update the widget every minute
         setupMinuteUpdateAlarm(context)
     }
 
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
-        // Cancel the alarm when the last widget is disabled
         cancelMinuteUpdateAlarm(context)
     }
 
     private fun setupMinuteUpdateAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // Intent to update the widget
         val intent = Intent(context, TimeWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         }
 
-        // PendingIntent for the alarm
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             0,
@@ -60,10 +55,9 @@ class TimeWidget : AppWidgetProvider() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Schedule the exact alarm to trigger every minute
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + 60000, // First trigger in 1 minute
+            SystemClock.elapsedRealtime() + 60000,
             pendingIntent
         )
     }
@@ -71,7 +65,6 @@ class TimeWidget : AppWidgetProvider() {
     private fun cancelMinuteUpdateAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // Cancel the PendingIntent used to update the widget
         val intent = Intent(context, TimeWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         }
@@ -82,7 +75,6 @@ class TimeWidget : AppWidgetProvider() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Cancel the alarm
         alarmManager.cancel(pendingIntent)
     }
 
@@ -93,11 +85,9 @@ class TimeWidget : AppWidgetProvider() {
     ) {
         val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
-        // Get the current time
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val currentTime = timeFormat.format(Date())
 
-        // Find the corresponding entry for the current time
         val entry = timeEntries.find { it.hour == currentTime }
 
         if (entry != null) {
@@ -105,10 +95,9 @@ class TimeWidget : AppWidgetProvider() {
             views.setTextViewText(R.id.text_title_author, "${entry.book} —\u00A0${entry.author}")
         } else {
             views.setTextViewText(R.id.text_quote, "No entry found for this minute.")
-            views.setTextViewText(R.id.text_title_author, "")
+            views.setTextViewText(R.id.text_title_author, ":(")
         }
 
-        // Update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
@@ -117,7 +106,6 @@ class TimeWidget : AppWidgetProvider() {
         val inputStream = context.resources.openRawResource(resourceId)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
-        // Skip the header
         reader.readLine()
 
         var line: String?
@@ -126,11 +114,7 @@ class TimeWidget : AppWidgetProvider() {
             if (nextLine.size >= 5) {
                 timeEntries.add(
                     TimeEntry(
-                        nextLine[0],
-                        nextLine[1],
-                        nextLine[2],
-                        nextLine[3],
-                        nextLine[4]
+                        nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4]
                     )
                 )
             }
@@ -142,7 +126,7 @@ class TimeWidget : AppWidgetProvider() {
 
     private fun formatText(boldWord: String, text: String): CharSequence {
         val spannableString = SpannableString(text)
-        val startIndex = text.indexOf(boldWord)
+        val startIndex = text.lowercase().indexOf(boldWord.lowercase())
         if (startIndex >= 0) {
             spannableString.setSpan(
                 StyleSpan(android.graphics.Typeface.BOLD),

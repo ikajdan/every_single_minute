@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EverySingleMinute</string>
+    <string name="widget_description">Time to read a quote</string>
 </resources>
