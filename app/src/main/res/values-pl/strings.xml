@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_description">Czas na przeczytanie cytatu</string>
+    <string name="quote_open">“</string>
+    <string name="quote_close">”</string>
+</resources>
