@@ -15,16 +15,6 @@
         android:theme="@style/Theme.EverySingleMinute"
         tools:targetApi="31">
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.EverySingleMinute">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <receiver
             android:name=".TimeWidget"
             android:exported="true"
