@@ -91,8 +91,11 @@ class TimeWidget : AppWidgetProvider() {
         val entry = timeEntries.find { it.hour == currentTime }
 
         if (entry != null) {
-            views.setTextViewText(R.id.text_quote, formatText(entry.timeToBold, entry.quote))
-            views.setTextViewText(R.id.text_title_author, "${entry.book} —\u00A0${entry.author}")
+            views.setTextViewText(R.id.text_quote, formatQuote(entry.timeToBold, entry.quote))
+            views.setTextViewText(
+                R.id.text_title_author,
+                formatTitleAuthor(entry.book, entry.author)
+            )
         } else {
             views.setTextViewText(R.id.text_quote, "No entry found for this minute.")
             views.setTextViewText(R.id.text_title_author, ":(")
@@ -124,7 +127,7 @@ class TimeWidget : AppWidgetProvider() {
         return timeEntries
     }
 
-    private fun formatText(boldWord: String, text: String): CharSequence {
+    private fun formatQuote(boldWord: String, text: String): CharSequence {
         val spannableString = SpannableString(text)
         val startIndex = text.lowercase().indexOf(boldWord.lowercase())
         if (startIndex >= 0) {
@@ -135,6 +138,14 @@ class TimeWidget : AppWidgetProvider() {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
+        return spannableString
+    }
+
+    private fun formatTitleAuthor(book: String, author: String): CharSequence {
+        val authorWithNbsp = author.replace(" ", "\u00A0")
+        val formattedText = "$book —\u00A0$authorWithNbsp"
+        val spannableString = SpannableString(formattedText)
+
         return spannableString
     }
 }
