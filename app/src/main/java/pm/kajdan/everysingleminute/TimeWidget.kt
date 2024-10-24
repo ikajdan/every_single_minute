@@ -94,7 +94,7 @@ class TimeWidget : AppWidgetProvider() {
             views.setTextViewText(R.id.text_quote, formatQuote(entry.timeToBold, entry.quote))
             views.setTextViewText(
                 R.id.text_title_author,
-                formatTitleAuthor(entry.book, entry.author)
+                formatTitleAuthor(context, entry.author, entry.book)
             )
         } else {
             views.setTextViewText(R.id.text_quote, "No entry found for this minute.")
@@ -141,10 +141,22 @@ class TimeWidget : AppWidgetProvider() {
         return spannableString
     }
 
-    private fun formatTitleAuthor(book: String, author: String): CharSequence {
-        val authorWithNbsp = author.replace(" ", "\u00A0")
-        val formattedText = "$book —\u00A0$authorWithNbsp"
+    private fun formatTitleAuthor(context: Context, author: String, book: String): CharSequence {
+        val quoteOpen = context.getString(R.string.quote_open)
+        val quoteClose = context.getString(R.string.quote_close)
+
+        val authorWithNbsp = ("— $author").replace(" ", "\u00A0")
+        val formattedText = "$authorWithNbsp, $quoteOpen$book$quoteClose"
         val spannableString = SpannableString(formattedText)
+
+        val start = formattedText.indexOf(book) - 1 // 1 for the leading quote
+        val end = start + book.length + 2 // 2 for the quotes
+        spannableString.setSpan(
+            StyleSpan(android.graphics.Typeface.ITALIC),
+            start,
+            end,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 
         return spannableString
     }

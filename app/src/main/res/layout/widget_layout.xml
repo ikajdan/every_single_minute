@@ -16,6 +16,7 @@
         android:id="@+id/text_title_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:alpha="0.7"
         android:textColor="@color/md_theme_onBackground"
