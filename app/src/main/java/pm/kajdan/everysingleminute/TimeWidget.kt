@@ -4,9 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -44,22 +44,23 @@ class TimeWidget : AppWidgetProvider() {
     private fun setupMinuteUpdateAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val intent = Intent(context, TimeWidget::class.java).apply {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.MINUTE, 1)
+        }
+
+        val updateIntent = Intent(context, TimeWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, getAppWidgetIds(context))
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            intent,
+            context, 0, updateIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + 60000,
-            pendingIntent
-        )
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 
     private fun cancelMinuteUpdateAlarm(context: Context) {
@@ -159,5 +160,10 @@ class TimeWidget : AppWidgetProvider() {
         )
 
         return spannableString
+    }
+
+    private fun getAppWidgetIds(context: Context): IntArray {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        return appWidgetManager.getAppWidgetIds(ComponentName(context, TimeWidget::class.java))
     }
 }
