@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.provider.AlarmClock
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -86,6 +87,21 @@ class TimeWidget : AppWidgetProvider() {
     ) {
         val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
+        val clockIntent = Intent(AlarmClock.ACTION_SHOW_ALARMS).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        val clockPendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            clockIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        views.setOnClickPendingIntent(
+            R.id.widget_container,
+            clockPendingIntent
+        )
+
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val currentTime = timeFormat.format(Date())
 
@@ -104,6 +120,7 @@ class TimeWidget : AppWidgetProvider() {
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
+
 
     private fun readCsv(context: Context, resourceId: Int): List<TimeEntry> {
         val timeEntries = mutableListOf<TimeEntry>()
