@@ -27,7 +27,7 @@ class TimeWidget : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         if (!::timeEntries.isInitialized) {
-            timeEntries = readCsv(context, R.raw.time)
+            timeEntries = readCsv(context)
         }
 
         for (appWidgetId in appWidgetIds) {
@@ -121,13 +121,12 @@ class TimeWidget : AppWidgetProvider() {
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
-
-    private fun readCsv(context: Context, resourceId: Int): List<TimeEntry> {
+    private fun readCsv(context: Context, fileName: String = "quotes.csv"): List<TimeEntry> {
         val timeEntries = mutableListOf<TimeEntry>()
-        val inputStream = context.resources.openRawResource(resourceId)
+        val inputStream = context.assets.open(fileName)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
-        reader.readLine()
+        reader.readLine() // Skip header
 
         var line: String?
         while (reader.readLine().also { line = it } != null) {
