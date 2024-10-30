@@ -8,10 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: 'ubuntu-22.04'
+    runs-on: 'ubuntu-24.04'
 
     env:
-      APP_NAME: 'EverySingleMinute'
       JAVA_VERSION: '21'
 
     steps:
