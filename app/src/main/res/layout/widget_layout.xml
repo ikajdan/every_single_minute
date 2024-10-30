@@ -10,18 +10,21 @@
 
     <TextView
         android:id="@+id/text_quote"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/text_footer"
         android:layout_alignParentTop="true"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/text_title_author"
+        android:id="@+id/text_footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:gravity="end"
         android:textColor="?attr/colorSecondary"
         android:textSize="14sp" />
+
 </RelativeLayout>

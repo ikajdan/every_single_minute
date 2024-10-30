@@ -3,4 +3,6 @@
     <string name="widget_description">Time to read a quote</string>
     <string name="quote_open">"</string>
     <string name="quote_close">"</string>
+    <string name="no_entry_quote">No entry found for this minute.</string>
+    <string name="no_entry_footer" translatable="false">— Ignacy Kajdan</string>
 </resources>
