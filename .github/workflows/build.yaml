@@ -27,11 +27,13 @@ jobs:
       - name: Run Lint
         run: ./gradlew --no-daemon lintDebug
 
-      - name: Build APK
+      - name: Build App
         run: ./gradlew --no-daemon assembleDebug
 
-      - name: Upload APK
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
-          path: ./app/build/
+          path: |
+            app/build/outputs/
+            app/build/reports/
