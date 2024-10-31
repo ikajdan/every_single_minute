@@ -16,6 +16,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 class TimeWidget : AppWidgetProvider() {
 
@@ -97,21 +98,22 @@ class TimeWidget : AppWidgetProvider() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        views.setOnClickPendingIntent(
-            R.id.widget_container,
-            clockPendingIntent
-        )
+        views.setOnClickPendingIntent(R.id.widget_container, clockPendingIntent)
 
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val currentTime = timeFormat.format(Date())
 
-        val entry = timeEntries.find { it.hour == currentTime }
+        val matchingEntries = timeEntries.filter { it.hour == currentTime }
+
+        val entry = if (matchingEntries.isNotEmpty()) {
+            matchingEntries[Random.nextInt(matchingEntries.size)]
+        } else {
+            null
+        }
 
         if (entry != null) {
             views.setTextViewText(R.id.text_quote, formatQuote(entry.timeToBold, entry.quote))
-            views.setTextViewText(
-                R.id.text_footer, formatFooter(context, entry.author, entry.book)
-            )
+            views.setTextViewText(R.id.text_footer, formatFooter(context, entry.author, entry.book))
         } else {
             views.setTextViewText(R.id.text_quote, context.getString(R.string.no_entry_quote))
             views.setTextViewText(R.id.text_footer, context.getString(R.string.no_entry_footer))

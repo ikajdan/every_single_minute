@@ -1,12 +1,12 @@
 [versions]
 agp = "8.7.1"
 kotlin = "2.0.0"
-coreKtx = "1.13.1"
-lifecycleRuntimeKtx = "2.8.6"
+coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.10.00"
+composeBom = "2024.10.01"
 material = "1.12.0"
-opencsv = "5.6"
+opencsv = "5.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
