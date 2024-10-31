@@ -25,7 +25,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Run Lint
-        run: ./gradlew lintDebug
+        run: ./gradlew --no-daemon lintDebug
 
       - name: Build APK
         run: ./gradlew --no-daemon assembleDebug
@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
-          path: ./app/build/outputs/apk/debug/
+          path: ./app/build/
