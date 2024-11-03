@@ -2,6 +2,7 @@
 /build
 /captures
 /local.properties
+/tools/.venv/
 .cxx
 .externalNativeBuild
 .gradle
