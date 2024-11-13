@@ -11,9 +11,13 @@
     <TextView
         android:id="@+id/text_quote"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/text_footer"
         android:layout_alignParentTop="true"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="16sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp" />
 
