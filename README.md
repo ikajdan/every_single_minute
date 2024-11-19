@@ -9,11 +9,11 @@ The idea for this widget came from the [Literary Clock](https://www.instructable
 ## Screenshots
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/3ff9e6db-d52a-46b9-80bd-d49138a2ebf4" alt="Word Cloud" width="250"/>
+  <img src="https://github.com/user-attachments/assets/4791d67f-272e-4eea-90af-6b664e49dff6" width="250"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/user-attachments/assets/85944374-d1d9-4ae7-a982-7829533a67e1" alt="Word Cloud" width="250"/>
+  <img src="https://github.com/user-attachments/assets/3257d8fb-a4f2-422b-92fd-8a9c673d3e4f" width="250"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/user-attachments/assets/7753027d-a220-4181-a881-bd239f0105c9" alt="Word Cloud" width="250"/>
+  <img src="https://github.com/user-attachments/assets/f6f6d375-95a1-46df-8643-62220a68bc96" width="250"/>
 </p>
 
 ## License
